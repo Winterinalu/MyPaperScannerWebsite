@@ -1,4 +1,5 @@
 const developmentModal = document.querySelector('[data-development-modal]');
+window.addEventListener('load', () => window.lucide?.createIcons());
 const developmentCloseButtons = document.querySelectorAll('[data-development-close]');
 const developmentCloseButton = developmentModal?.querySelector('.development-modal-close');
 
