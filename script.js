@@ -1,3 +1,22 @@
+const developmentModal = document.querySelector('[data-development-modal]');
+const developmentCloseButtons = document.querySelectorAll('[data-development-close]');
+const developmentCloseButton = developmentModal?.querySelector('.development-modal-close');
+
+function closeDevelopmentModal() {
+  if (!developmentModal) return;
+  developmentModal.classList.add('is-hidden');
+  document.body.classList.remove('development-modal-open');
+}
+
+if (developmentModal) {
+  document.body.classList.add('development-modal-open');
+  developmentCloseButtons.forEach((element) => element.addEventListener('click', closeDevelopmentModal));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDevelopmentModal();
+  });
+  developmentCloseButton?.focus();
+}
+
 const menuButton = document.querySelector('[data-menu-button]');
 const menu = document.querySelector('[data-menu]');
 
