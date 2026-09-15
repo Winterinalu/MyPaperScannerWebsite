@@ -20,6 +20,18 @@ if (developmentModal) {
 const menuButton = document.querySelector('[data-menu-button]');
 const menu = document.querySelector('[data-menu]');
 
+document.addEventListener('click', (event) => {
+  const link = event.target.closest('a[href^="#"]');
+  if (!link) return;
+
+  const target = document.querySelector(link.getAttribute('href'));
+  if (!target) return;
+
+  event.preventDefault();
+  target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+  window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+});
+
 function closeMenu() {
   if (!menuButton || !menu) return;
   menuButton.setAttribute('aria-expanded', 'false');
@@ -51,4 +63,14 @@ if ('IntersectionObserver' in window && workflow && !reducedMotion) {
   workflowObserver.observe(workflow);
 } else if (workflow) {
   workflow.classList.add('is-visible');
+}
+
+const heroDevice = document.querySelector('.hero-device-wrap');
+
+if (heroDevice) {
+  const heroSceneImage = document.createElement('img');
+  heroSceneImage.className = 'hero-scene-image';
+  heroSceneImage.src = 'assets/hero-phone-scene.svg';
+  heroSceneImage.alt = 'MyPaperScanner phone preview with local privacy and PDF status notes';
+  heroDevice.append(heroSceneImage);
 }
