@@ -75,3 +75,24 @@ if (heroDevice) {
   heroSceneImage.alt = 'MyPaperScanner phone preview with local privacy and PDF status notes';
   heroDevice.append(heroSceneImage);
 }
+
+const releaseMeta = document.querySelector('[data-release-meta]');
+
+if (releaseMeta) {
+  fetch('https://api.github.com/repos/Winterinalu/MyPaperScanner/releases/latest')
+    .then((response) => {
+      if (!response.ok) throw new Error(`GitHub release request failed: ${response.status}`);
+      return response.json();
+    })
+    .then((release) => {
+      const apk = release.assets.find((asset) => asset.name === 'MyPaperScanner-release.apk');
+      if (!apk) throw new Error('The latest GitHub release does not include the APK.');
+
+      releaseMeta.querySelector('[data-release-version]').textContent = release.tag_name;
+      releaseMeta.querySelector('[data-release-size]').textContent =
+        `${(apk.size / (1024 * 1024)).toFixed(1)} MB`;
+    })
+    .catch((error) => {
+      console.error('Unable to load APK release details.', error);
+    });
+}
